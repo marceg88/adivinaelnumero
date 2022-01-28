@@ -1,42 +1,39 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 
 function App() {
-  const [ingreso, setIngreso] = useState(0);
-  const [numAleatorio, setNumAleatorio] = useState(0)
-  const [estado, setEstado] = useState(false) //Estado del boton
-  const [resultado, setResultado] = useState(false)
 
-  const empezar = () => {
-    setNumAleatorio(Math.ceil(Math.random() * 10));
-    setEstado(true);
-  };
-  console.log(numAleatorio)
-  
-  const enviar = (e) => {
+  const [numAleatorio, setNumAleatorio] = useState(0);
+  const [numIngresado, setNumIngresado] = useState(0);
+  const [respuesta, setRespuesta] = useState('');
+
+  const start = () => {
+    const aux = Math.floor(Math.random()*(11));
+    setNumAleatorio(aux);
+  }
+
+  const adivina = (e) => {
     e.preventDefault()
-
-    if(+ingreso === +numAleatorio){
-      setResultado("Adivinaste!")
-      setEstado(false)
-    }else{
-      setResultado("Sigue intentando.")
+    if(numIngresado == numAleatorio){
+      setRespuesta('Adivinaste!')
+    }else {
+      setRespuesta('Sigue intentando')
     }
   }
-  
-  
- 
-    return (
-      <div className = "App">
-        <form onSubmit={enviar}>
-          <input value={ingreso} onChange={(e) => setIngreso(e.target.value)}/>
-          <button type="button" onClick={empezar}>Empezar el juego</button>
-        </form>
-        
-      </div>
-    );
 
-    
+  console.log(numAleatorio)
+  console.log(numIngresado)
+
+  return (
+    <div className="App">
+      <form onSubmit={adivina}>
+          <label>Ingresa un número del 1 al 10: </label>
+          <input value={numIngresado} onChange={(e) => setNumIngresado(e.target.value)}/>
+          <button onClick={start}>Empezar</button>
+          <p>{respuesta}</p>
+      </form>
+    </div>
+  );
 }
 
 export default App;
